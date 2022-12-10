@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ng-gallery/tsconfig.lib.json",
             "project": "projects/ng-gallery/ng-package.json"
@@ -27,18 +27,6 @@
             "main": "projects/ng-gallery/src/test.ts",
             "tsConfig": "projects/ng-gallery/tsconfig.spec.json",
             "karmaConfig": "projects/ng-gallery/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ng-gallery/tsconfig.lib.json",
-              "projects/ng-gallery/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -62,15 +50,26 @@
             "main": "projects/ng-gallery-demo/src/main.ts",
             "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
             "tsConfig": "projects/ng-gallery-demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/ng-gallery-demo/src/favicon.ico",
               "projects/ng-gallery-demo/src/assets"
             ],
             "styles": [
-              "projects/ng-gallery-demo/src/styles.scss"
+              "projects/ng-gallery-demo/src/styles.scss",
+              "node_modules/highlight.js/styles/a11y-light.css"
             ],
-            "scripts": []
+            "allowedCommonJsDependencies": [
+              "bezier-easing",
+              "@fortawesome/free-brands-svg-icons",
+              "@fortawesome/free-solid-svg-icons"
+            ],
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -83,7 +82,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -96,12 +94,13 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "12kb",
+                  "maximumError": "12kb"
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -137,19 +136,6 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ng-gallery-demo/tsconfig.app.json",
-              "projects/ng-gallery-demo/tsconfig.spec.json",
-              "projects/ng-gallery-demo/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -163,6 +149,6 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-gallery-demo"
+    }
+  }
 }

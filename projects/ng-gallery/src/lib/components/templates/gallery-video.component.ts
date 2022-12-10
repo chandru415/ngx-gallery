@@ -1,10 +1,18 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'gallery-video',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video #video [controls]="controls" [poster]="poster" (error)="error.emit($event)">
+    <video #video
+           [attr.mute]="mute"
+           [attr.controlsList]="controlsList"
+           [attr.disablePictureInPicture]="disablePictureInPicture"
+           [disableRemotePlayback]="disableRemotePlayback"
+           [controls]="controls"
+           [loop]="loop"
+           [poster]="poster"
+           (error)="error.emit($event)">
       <source *ngFor="let src of videoSources" [src]="src?.url" [type]="src?.type"/>
     </video>
   `
@@ -12,11 +20,15 @@ import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrateg
 export class GalleryVideoComponent implements OnInit {
 
   videoSources: { url: string, type?: string }[];
-  controls: boolean;
 
   @Input() src: string | { url: string, type?: string }[];
   @Input() poster: string;
-  @Input('controls') controlsEnabled: boolean;
+  @Input() mute: boolean;
+  @Input() loop: boolean;
+  @Input() controls: boolean;
+  @Input() controlsList: 'nodownload' | 'nofullscreen' | 'noremoteplayback';
+  @Input() disableRemotePlayback: boolean;
+  @Input() disablePictureInPicture: boolean;
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
     if (this.video.nativeElement) {
@@ -37,7 +49,7 @@ export class GalleryVideoComponent implements OnInit {
   }
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
 
   @ViewChild('video', { static: true }) video: ElementRef;
 
@@ -48,6 +60,5 @@ export class GalleryVideoComponent implements OnInit {
     } else {
       this.videoSources = [{ url: this.src }];
     }
-    this.controls = typeof this.controlsEnabled === 'boolean' ? this.controlsEnabled : true;
   }
 }

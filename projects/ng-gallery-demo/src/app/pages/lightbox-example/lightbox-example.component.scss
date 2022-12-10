@@ -1,3 +1,14 @@
+:host {
+  .mdc-button {
+    ::ng-deep {
+      .mdc-button__label {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
 .example-card {
   width: 400px;
 }
@@ -12,8 +23,8 @@
   border-radius: 0.2em;
   overflow: hidden;
   padding: 0;
-  width: 200px;
-  height: 140px;
+  width: 150px;
+  height: 90px;
 
   @media only screen and (max-width: 480px) {
     margin: 0.4em;

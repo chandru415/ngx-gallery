@@ -2,29 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
+import { GALLERY_CONFIG } from 'ng-gallery';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from 'ngx-progressbar/http';
+import { NgProgressRouterModule } from 'ngx-progressbar/router';
+// ICONS
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRoutingModule } from './routing.module';
-import { MaterialModule } from './material.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 
 import { GalleryMockDialog } from './shared/gallery-mock-dialog';
-import { SharedModule } from './shared/shared.module';
-import { NgProgressModule } from 'ngx-progressbar';
-import { NgProgressHttpModule } from 'ngx-progressbar/http';
-import { NgProgressRouterModule } from 'ngx-progressbar/router';
-
-import { GALLERY_CONFIG } from '../../../ng-gallery/src/public-api';
-
-// =================
-// ICONS
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
-import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
-import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -36,13 +30,10 @@ import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    MaterialModule,
-    FlexLayoutModule,
     SharedModule,
     NgProgressModule,
     NgProgressHttpModule,
-    NgProgressRouterModule,
-    HighlightModule
+    NgProgressRouterModule
   ],
   providers: [
     {
@@ -69,15 +60,10 @@ import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
       }
     }
   ],
-  entryComponents: [
-    GalleryMockDialog
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faTwitter);
-    library.addIcons(faGithub);
-    library.addIcons(faExternalLinkAlt);
+    library.addIcons(faTwitter, faGithub, faExternalLinkAlt);
   }
 }

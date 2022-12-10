@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
-import { GalleryConfig, GalleryItem } from '../../../../../ng-gallery/src/public-api';
+import { GalleryConfig, GalleryItem } from 'ng-gallery';
 import { Pixabay } from '../../service/pixabay.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   readonly media$: Observable<GalleryConfig>;
 
   constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
-    this.camel$ = pixabay.getHDImages('juice');
+    this.camel$ = pixabay.getHDImages('mountain');
     this.media$ = mediaObserver.asObservable().pipe(
       map((res: MediaChange[]) => {
         if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {

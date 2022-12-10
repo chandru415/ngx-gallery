@@ -5,16 +5,16 @@ import { GalleryConfig } from '../models/config.model';
   selector: 'gallery-thumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <gallery-image [src]="data.thumb" 
-                   mode="indeterminate"
-                   [isThumbnail]="true" 
+    <gallery-image [src]="data.thumb"
+                   [alt]="data.alt + '-thumbnail'"
+                   [isThumbnail]="true"
                    [loadingIcon]="config.thumbLoadingIcon"
-                   [loadingError]="config.thumbLoadingError "
+                   [loadingError]="config.thumbLoadingError"
                    (error)="error.emit($event)"></gallery-image>
 
     <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
       <ng-container
-        *ngTemplateOutlet="config.thumbTemplate; context: { index: this.index, type: this.type, data: this.data }">
+        *ngTemplateOutlet="config.thumbTemplate; context: { index, type, data, isActive }">
       </ng-container>
     </div>
   `
@@ -35,7 +35,7 @@ export class GalleryThumbComponent {
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: any;
 
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
 
   @HostBinding('class.g-active-thumb') get isActive() {
     return this.index === this.currIndex;

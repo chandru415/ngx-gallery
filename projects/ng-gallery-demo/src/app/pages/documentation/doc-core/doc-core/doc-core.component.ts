@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-doc-core',
+  selector: 'app-getting-started',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './doc-core.component.html',
   styleUrls: ['./doc-core.component.scss']
 })
 export class DocCoreComponent {
 
-  docs = `import { GalleryModule } from  'ngx-gallery';
+  docs = `import { GalleryModule } from  'ng-gallery';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ export class DocCoreComponent {
   ]
 })`;
 
-  docsWithConfig = `import { GalleryModule } from  'ngx-gallery';
+  docsWithConfig = `import { GalleryModule } from  'ng-gallery';
 
 @NgModule({
   imports: [

@@ -53,7 +53,9 @@ type GalleryItemModel = {
   thumb?: string;
 };
 
-export type ImageItemData = GalleryItemModel;
+export type ImageItemData = GalleryItemModel & {
+  alt?: string;
+};
 
 export type IframeItemData = GalleryItemModel & {
   params?: any;
@@ -67,8 +69,15 @@ export type VideoItemData = GalleryItemModel & {
   src?: string | { url: string, type: string }[];
   thumb?: string;
   poster?: string;
+  loop?: boolean;
+  // The only option for boolean video attributes is 'true', because false will still be evaluated to true in attributes binding
+  mute?: true;
+  disablePictureInPicture?: true;
   controls?: boolean;
   autoplay?: boolean;
+  preload?: 'none' | 'metadata' | 'auto' | '';
+  controlsList?: 'nodownload' | 'nofullscreen' | 'noremoteplayback';
+  disableRemotePlayback?: boolean;
 };
 
 export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData;

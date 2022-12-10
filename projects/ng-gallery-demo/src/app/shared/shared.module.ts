@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ObserversModule } from '@angular/cdk/observers';
 import { PlatformModule } from '@angular/cdk/platform';
+import { ClipboardModule} from '@angular/cdk/clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HighlightModule } from 'ngx-highlightjs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MaterialModule } from '../material.module';
 
 import { KeysPipe } from './pipes/keys.pipe';
@@ -37,7 +38,8 @@ import { NoteComponent } from './note/note.component';
     PlatformModule,
     FlexLayoutModule,
     NgScrollbarModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ClipboardModule,
   ],
   exports: [
     CommonModule,
@@ -53,7 +55,8 @@ import { NoteComponent } from './note/note.component';
     MenuComponent,
     FooterComponent,
     BadgesComponent,
-    NoteComponent
+    NoteComponent,
+    ClipboardModule,
   ]
 })
 export class SharedModule {

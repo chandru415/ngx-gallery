@@ -1,10 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
-
 import { GalleryModule } from 'ng-gallery';
-// Uncomment the following line in development mode
-// import { GalleryModule } from '../../src/public-api';
 
 import { Lightbox } from './lightbox.service';
 import { LightboxComponent } from './lightbox.component';
@@ -29,9 +26,6 @@ import { GallerizeDirective } from './gallerize.directive';
   ],
   providers: [
     Lightbox
-  ],
-  entryComponents: [
-    LightboxComponent
   ]
 })
 export class LightboxModule {

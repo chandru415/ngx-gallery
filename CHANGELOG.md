@@ -1,5 +1,139 @@
 # Changelog
 
+## 8.0.0
+
+- feat(core): Add `isActive` to custom gallery template context, in [0b3f8bf](https://github.com/MurhafSousli/ngx-gallery/pull/497/commits/0b3f8bf43e383a8ee3e53a3140e18b8bcf1c2d69).
+- refactor(core): Fix the iframe error regarding the `allow` attribute.
+- refactor(core): Change default navigation icons.
+- refactor(core): Change default dots size.
+- refactor(core): Change default counter styles.
+- regret(core): Remove`itemLoaded` output.
+
+
+## 8.0.0-beta.5
+
+- regret(core): Remove`contentVisibilityAuto` option for version 8.
+- ~~feat(core): Add `itemLoaded` output which emits after an item is loaded, for image items it emits after the image is loaded.~~
+- feat(core): Add `autoHeight` option, when set to true, the gallery height will fit the active item height.
+- feat(core): Add `autoItemSize` option, when set to true, the item will fit its image aspect ratio.
+- feat(core): Add `autoThumbSize` option, when set to true, the thumb will fit its image aspect ratio.
+- feat(core): Add `scrollBehavior` option.
+- feat(core): Add `navScrollBehavior` option.
+- feat(core): Add `thumbImageSize` option.
+- feat(core): Add more options to the video item.
+- feat(core): Add `configSnapshot` to `GalleryRef` class.
+- feat(core): Add an optional parameter `behavior` to all `next(behavior?)`, `prev(behavior?)`, `set(index, behavior?)` functions, fallbacks to the `scrollBehavior` config.
+- refactor(core): Only display custom item template container when `itemTemplate` is provided.
+
+## 8.0.0-beta.4
+
+- ~~feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).~~
+- feat(core): Use native `loading` attribute on all `img` and `iframe` for native lazy loading.
+- refactor(core): Fix loop issue when sliding with using the mouse, in [1572bea](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/1572beae2bc58792fac94243f4f3e20c0a61e549).
+- refactor(core): Remove `lazy-image` directive.
+
+## 8.0.0-beta.3
+
+- fix(core): Set current index in sliding event does not work if slider size number has fraction, in [58e89fb](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/58e89fb3ed0e3837ca08a8111d567d992717ba7a).
+
+## 8.0.0-beta.2
+
+- fix(lightbox): close button is not displayed, in [506249b](https://github.com/MurhafSousli/ngx-gallery/pull/490/commits/506249bbc5877cd4ed54cf610a42b3a31abcb417).
+
+## 8.0.0-beta.1
+
+- feat(core): Use scrolling slider instead of transform method, allows touchpad scroll to slide the gallery as well as native sliding on mobile browser.
+- feat(core): Add `resizeDebounceTime` option which is used to update the gallery on window resize event in [34a2723](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/34a27238eed6515fd748c43909c3fd0098b6a575) and [d867630](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d86763042553a340b3a367c56c0a2549b690f751).
+- feat(core): Add `slidingEase` and `slidingDuration` to customize sliding ease and duration in [4c1db03](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/4c1db03afb3a27896cd6dad5d08f91612bfa75a2).
+- feat(core): Add `thumbDetached` to detach thumb slider, closes [#289](https://github.com/MurhafSousli/ngx-gallery/issues/289) in [1f47484](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/1f474847f999b2f1b0c820d50bf7336bfe6b8a3c).
+- feat(core): Add `boxTemplate` to the gallery, closes [#487](https://github.com/MurhafSousli/ngx-gallery/issues/487) in [f46e33a](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/f46e33abf231ab86bd0b906e4b20e02e4bbf7bf4).
+- feat(core): Add `slidingDisabled` and `thumbSlidingDisabled` options to enable/disable sliding on Mobile and Desktop using the touchpad. in [2451581](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/2451581cee382a17f3a95671cf3950910a5122d3).
+- feat(core): Add `mouseSlidingDisabled` and `mouseThumbSlidingDisabled` options to enable/disable sliding on Desktop using the mouse. in [2451581](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/2451581cee382a17f3a95671cf3950910a5122d3).
+- feat(core): Images not shown, when number of images get larger, closes [#484](https://github.com/MurhafSousli/ngx-gallery/issues/484) in [e819ebe](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/e819ebe3442f0cd37c1914bccf82a72d1fb2ce85).
+- fix(core): `thumbView="contain"` Sliding thumbnails using gestures has an issue, closes [#417](https://github.com/MurhafSousli/ngx-gallery/issues/417) in [e819ebe](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/e819ebe3442f0cd37c1914bccf82a72d1fb2ce85).
+- refactor(core): Remove `thumbMode` option from the gallery, in [18f71e3](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/18f71e3599f7af1a20f1482307a6370c0c8b6f05)
+- refactor(core): Remove `tapClick` event and use native `click` event, in [3d960cc](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/3d960cca3b4954c999e10a86b0993d45d5c8462f).
+- refactor(core): Remove `ng-content` from the gallery, in [63e3b6b](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/63e3b6b5110ee5eaab6452cf775c3488023bd7d9).
+- refactor(core): Remove `panSensitivity` option, in [d1f8d34](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d1f8d342a597d88afe66681b4ae099362273e03c).
+- refactor(core): Remove `gestures` option, in [70cb00c](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/70cb00c5aa808ea33aba1b674666ab0f99501a9d).
+- refactor(core): Remove `reserveGesturesAction` option, in [4b07fc7](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/4b07fc7ca4ef3d50e59accfe11593ee3a84ee706).
+- refactor(core): Remove `zoomOut` option, in [19ba2b8](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/19ba2b8c8d4402085c0b400b3e4c0e014d2e5abb).
+
+### Breaking changes:
+
+HammerJs is only used for sliding using the mouse on desktop only, Sliding on mobile devices is now native scroll.
+
+- `gestures` option has been deprecated.
+- `thumbMode` option has been deprecated, sliding thumbnails is free.
+- `zoomOut` has been deprecated.
+- `reserveGesturesAction` has been deprecated.
+- `panSensitivity` has been deprecated.
+- Remove `ng-content` from the gallery, use `boxTemplate` option to add your custom layer.
+- The default value for `loadingStrategy` option has changed to `LoadingStrategy.Preload`.
+- Added new dependency `bezier-easing`.
+
+
+## 7.1.2
+
+- fix(core): Fix `reserveGestureAction` input and its default value in the lightbox, in [ba95036](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/ba950362b3fd5378d929ef14b56b1cb602382c9e).
+- fix(core): Update gallery sliding position properly on window resize, in [f786d0a](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/f786d0a1ef44fd4a1c0a89126a57765131b5beba).
+- fix(core): Slide bug with touch scroll with gallery thumbnails, related to [#465](https://github.com/MurhafSousli/ngx-gallery/issues/465) in [eb1e60c](https://github.com/MurhafSousli/ngx-gallery/pull/476/commits/eb1e60cd033d939485f4b2e4be30d95b49a3d7c5) in [a26d63f](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/a26d63fe2f04667eb6bd7e36aba960c066f95305).
+
+## 7.1.1
+
+- feat(core): New option `reserveGesturesAction` adds the ability to block the scrolling of page when sliding the gallery on mobile browser, closes [#477](https://github.com/MurhafSousli/ngx-gallery/issues/477) in [c105f21](https://github.com/MurhafSousli/ngx-gallery/pull/478/commits/c105f21fec747a71e849994d4e749f6e0c4b8b3f).
+- fix(core): Slide bug with touch scroll, closes [#465](https://github.com/MurhafSousli/ngx-gallery/issues/465) in [eb1e60c](https://github.com/MurhafSousli/ngx-gallery/pull/476/commits/eb1e60cd033d939485f4b2e4be30d95b49a3d7c5).
+
+## 7.1.0
+
+- feat(core): Settings change shouldn't require restart, closes [#466](https://github.com/MurhafSousli/ngx-gallery/issues/466) in [ee71e52](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/ee71e528313f7780d82226aa1d849a6debc74ade).
+- fix(core): Unable to drag thumbnails properly, closes [473](https://github.com/MurhafSousli/ngx-gallery/issues/473) in [8635701](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/86357014d140360cb110adb1d3115836c988e4c7).
+- fix(core): Setting gestures to false breaks the gallery, closes [#464](https://github.com/MurhafSousli/ngx-gallery/issues/464), [#467](https://github.com/MurhafSousli/ngx-gallery/issues/467) and [#469](https://github.com/MurhafSousli/ngx-gallery/issues/469) in [a374603](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/a374603d60e82518c5b9de11309e68be365c94bc).
+- fix(core): Set `alt` on gallery thumbnails and add `role="button"` to gallery nav, closes [#468](https://github.com/MurhafSousli/ngx-gallery/issues/468) in [57bebca](https://github.com/MurhafSousli/ngx-gallery/pull/471/commits/57bebca657b160e3973fd1f73daf6b655dd25fa2).
+- fix(lightbox): Close icon in lightbox container being re-rendered all the time due to bug in template, closes [#307](https://github.com/MurhafSousli/ngx-gallery/issues/307) in [6bdc7a4](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/6bdc7a4add557a90043a665b73ea77f0d7d1979f).
+- enhance(core, lightbox): Remove deprecated usage, in [23506eb](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/23506eb52ebd2c2e5f1d124e77dc8c8695a7eafc).
+
+## 7.0.4
+
+- fix(core): imageSize option when set to contain, in [3ecf94e](https://github.com/MurhafSousli/ngx-gallery/pull/462/commits/3ecf94e78d26378cc1330f2d432b59675526f63f).
+
+## 7.0.3
+
+- enhance(core): Use `img` element instead of div background image to display images, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+- feat(core): Add alt property to `GalleryImage`, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+
+## 7.0.2
+
+- fix(core): Should not show sliding effect on initial state, closes [#458](https://github.com/MurhafSousli/ngx-gallery/issues/458) in [c810039](https://github.com/MurhafSousli/ngx-gallery/pull/459/commits/c8100396e711b76cf350d69e706e472f63658209).
+
+## 7.0.1
+
+- feat(core): Avoid triggering change detection while dragging in [8ed5948](https://github.com/MurhafSousli/ngx-gallery/pull/456/commits/8ed5948b7e6a12624bb398ce6a70536190563778).
+- fix(core): Gallery thumbs vertical slider does not navigate when direction is up, closes [#454](https://github.com/MurhafSousli/ngx-gallery/issues/454) in [4eb7d2f](https://github.com/MurhafSousli/ngx-gallery/pull/455/commits/4eb7d2fda10f5b3f10a049fa955377b3afb392fd).
+
+## 7.0.0
+
+- Update to Angular 14 in [64d5620](https://github.com/MurhafSousli/ngx-gallery/pull/444/commits/64d5620c27ee7ea3caab8ad1cafc9eca7f0c7bf4).
+
+## 6.0.1
+
+- fix: Downgrade rxjs peerDependencies to v6 in [35f58fd](https://github.com/MurhafSousli/ngx-gallery/pull/429/commits/35f58fde087fa4f01916eb4dfd3ff6a10f9c62cc).
+
+## 6.0.0
+
+- Update to Angular 13, closes [#424](https://github.com/MurhafSousli/ngx-gallery/issues/322) in [#420](https://github.com/MurhafSousli/ngx-gallery/pull/420).
+
+## 5.1.1
+
+Adds a new option to the global config as well as an input called `thumbView` which is expects a value of either `default` or `contain`
+
+- feat(core): Thumbnails should always use the available space, closes [#340](https://github.com/MurhafSousli/ngx-gallery/issues/340) in [ad3e514](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/ad3e5143e86c922d5d5927bb527f83e9a99612d8) and [5523b2e](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/5523b2e01c0a9263141854bb8b838d85ebf16cc9).
+- feat(core): Add `stateSnapshot` property to `GalleryRef` to get an instant snapshot of the gallery state observable.
+- fix(core): Video item displays the application instead of video, closes [#398](https://github.com/MurhafSousli/ngx-gallery/issues/398) in [f07c304](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/f07c3047a2426293bc34bcf57765642df0bcc35a).
+- fix(core): Issue with gallery.remove() function, closes [#405](https://github.com/MurhafSousli/ngx-gallery/issues/405) in [f0fb1c3](https://github.com/MurhafSousli/ngx-gallery/pull/411#:~:text=removing%20an%20item-,f0fb1c3,-Merge%20state) and [6e080b4](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/6e080b43e03448ce329253918ae51c2da56eafae).
+
+ > Special thanks to @NexGenUA for his PR
+
 ## 5.0.0
 
 - Upgrade to Angular 10.

@@ -17,6 +17,11 @@ export enum LoadingStrategy {
   Default = 'default'
 }
 
+export enum LoadingAttr {
+  Eager= 'eager',
+  Lazy = 'lazy'
+}
+
 export enum ThumbnailsPosition {
   Top = 'top',
   Left = 'left',
@@ -24,12 +29,7 @@ export enum ThumbnailsPosition {
   Bottom = 'bottom'
 }
 
-export enum ImageLoaderMode {
-  Determinate= 'determinate',
-  Indeterminate= 'indeterminate'
-}
-
-export enum DotsPosition {
+export enum BulletsPosition {
   Top = 'top',
   Bottom = 'bottom'
 }
@@ -39,24 +39,16 @@ export enum CounterPosition {
   Bottom = 'bottom'
 }
 
-export enum ThumbnailsMode {
-  Free = 'free',
-  Strict = 'strict'
-}
-
-export enum SlidingDirection {
+export enum Orientation {
   Horizontal = 'horizontal',
   Vertical = 'vertical'
 }
 
-export enum GalleryItemType {
+export enum GalleryItemTypes {
   Image = 'image',
   Video = 'video',
   Youtube = 'youtube',
   Iframe = 'iframe'
 }
 
-export enum ThumbnailsView {
-  Default = 'default',
-  Contain = 'contain',
-}
+export type GalleryItemType = GalleryItemTypes | string;

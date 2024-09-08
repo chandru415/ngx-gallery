@@ -1,38 +1,38 @@
 import { GalleryItem } from '../../models/gallery.model';
-import { GalleryItemType } from '../../models/constants';
+import { GalleryItemType, GalleryItemTypes } from '../../models/constants';
 
 export class ImageItem implements GalleryItem {
-  readonly type: string;
+  readonly type: GalleryItemType;
   readonly data: ImageItemData;
 
   constructor(data: ImageItemData) {
     this.data = data;
-    this.type = GalleryItemType.Image;
+    this.type = GalleryItemTypes.Image;
   }
 }
 
 export class VideoItem implements GalleryItem {
-  readonly type: string;
+  readonly type: GalleryItemType;
   readonly data: VideoItemData;
 
   constructor(data: VideoItemData) {
     this.data = data;
-    this.type = GalleryItemType.Video;
+    this.type = GalleryItemTypes.Video;
   }
 }
 
 export class IframeItem implements GalleryItem {
-  readonly type: string;
+  readonly type: GalleryItemType;
   readonly data: IframeItemData;
 
   constructor(data: IframeItemData) {
     this.data = data;
-    this.type = GalleryItemType.Iframe;
+    this.type = GalleryItemTypes.Iframe;
   }
 }
 
 export class YoutubeItem implements GalleryItem {
-  readonly type: string;
+  readonly type: GalleryItemType;
   readonly data: YoutubeItemData;
 
   constructor(data: YoutubeItemData) {
@@ -43,14 +43,15 @@ export class YoutubeItem implements GalleryItem {
         thumb: data.thumb ? data.thumb : `//img.youtube.com/vi/${ data.src }/default.jpg`
       }
     };
-    this.type = GalleryItemType.Youtube;
+    this.type = GalleryItemTypes.Youtube;
   }
 }
 
 type GalleryItemModel = {
-  type?: string;
-  src?: string;
+  type?: GalleryItemType;
+  src?: string | { url: string, type: string }[];
   thumb?: string;
+  args?: any;
 };
 
 export type ImageItemData = GalleryItemModel & {
@@ -66,8 +67,6 @@ export type YoutubeItemData = IframeItemData & {
 };
 
 export type VideoItemData = GalleryItemModel & {
-  src?: string | { url: string, type: string }[];
-  thumb?: string;
   poster?: string;
   loop?: boolean;
   // The only option for boolean video attributes is 'true', because false will still be evaluated to true in attributes binding
@@ -81,3 +80,5 @@ export type VideoItemData = GalleryItemModel & {
 };
 
 export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData;
+
+export type ItemState = 'success' | 'loading' | 'failed';

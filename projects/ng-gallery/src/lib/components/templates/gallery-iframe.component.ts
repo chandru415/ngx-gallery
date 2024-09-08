@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -7,7 +8,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   template: `
     <iframe *ngIf="autoplay; else default"
             #iframe
-            loading="lazy"
+            [attr.loading]="loadingAttr"
             allowfullscreen
             allow
             style="border:none"
@@ -15,13 +16,15 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     </iframe>
     <ng-template #default>
       <iframe #iframe
-              loading="lazy"
+              [attr.loading]="loadingAttr"
               allowfullscreen
               style="border:none"
               [src]="iframeSrc">
       </iframe>
     </ng-template>
-  `
+  `,
+  standalone: true,
+  imports: [NgIf]
 })
 export class GalleryIframeComponent {
 
@@ -47,6 +50,8 @@ export class GalleryIframeComponent {
   }
 
   @Input() autoplay: boolean;
+
+  @Input() loadingAttr: 'eager' | 'lazy';
 
   @ViewChild('iframe') iframe: ElementRef;
 

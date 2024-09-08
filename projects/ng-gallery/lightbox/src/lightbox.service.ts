@@ -10,7 +10,9 @@ import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Lightbox {
 
   /** Gallery overlay ref */
@@ -45,7 +47,7 @@ export class Lightbox {
    */
   open(i = 0, id = 'lightbox', config?: LightboxConfig) {
 
-    const _config = config ? { ...this._config, ...config } : this._config;
+    const _config: LightboxConfig = config ? { ...this._config, ...config } : this._config;
 
     const overlayConfig: OverlayConfig = {
       backdropClass: _config.backdropClass,

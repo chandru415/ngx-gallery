@@ -4,9 +4,11 @@ import { GalleryState } from '../models/gallery.model';
 @Component({
   selector: 'gallery-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./gallery-counter.scss'],
   template: `
     <div class="g-counter">{{ (state.currIndex + 1) + ' / ' + state.items.length }}</div>
-  `
+  `,
+  standalone: true
 })
 export class GalleryCounterComponent {
   @Input() state: GalleryState;

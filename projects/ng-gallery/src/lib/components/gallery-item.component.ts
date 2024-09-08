@@ -4,34 +4,38 @@ import {
   Input,
   Output,
   EventEmitter,
-  AfterViewChecked,
   ElementRef,
-  ChangeDetectorRef,
+  AfterViewInit,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
+import { GalleryItemContext } from '../directives/gallery-item-def.directive';
+import { GalleryIframeComponent } from './templates/gallery-iframe.component';
+import { GalleryVideoComponent } from './templates/gallery-video.component';
+import { GalleryImageComponent } from './templates/gallery-image.component';
 import { GalleryConfig } from '../models/config.model';
-import { LoadingStrategy, GalleryItemType } from '../models/constants';
-import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
+import { GalleryItemType, GalleryItemTypes, LoadingStrategy } from '../models/constants';
+import { GalleryItemData, ImageItemData, ItemState, VideoItemData, YoutubeItemData } from './templates/items.model';
 
 @Component({
   selector: 'gallery-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./gallery-item.scss'],
   template: `
     <ng-container *ngIf="load" [ngSwitch]="type">
       <ng-container *ngSwitchCase="Types.Image">
-
         <gallery-image [src]="imageData.src"
                        [alt]="imageData.alt"
+                       [index]="index"
+                       [loadingAttr]="config.loadingAttr"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
-                       (loaded)="onItemLoaded()"
                        (error)="error.emit($event)"></gallery-image>
 
-        <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive }">
-          </ng-container>
+        <div *ngIf="config.imageTemplate" class="g-template g-item-template">
+          <ng-container *ngTemplateOutlet="config.imageTemplate; context: imageContext"></ng-container>
         </div>
-
       </ng-container>
 
       <gallery-video *ngSwitchCase="Types.Video"
@@ -48,28 +52,33 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
       <gallery-iframe *ngSwitchCase="Types.Youtube"
                       [src]="youtubeSrc"
                       [autoplay]="isAutoPlay"
+                      [loadingAttr]="config.loadingAttr"
                       [pause]="currIndex !== index"></gallery-iframe>
 
       <gallery-iframe *ngSwitchCase="Types.Iframe"
-                      [src]="data.src"></gallery-iframe>
+                      [src]="data.src"
+                      [loadingAttr]="config.loadingAttr"></gallery-iframe>
 
       <ng-container *ngSwitchDefault>
-
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive: isActive }">
-          </ng-container>
+          <ng-container *ngTemplateOutlet="config.itemTemplate; context: itemContext"></ng-container>
         </div>
-
       </ng-container>
     </ng-container>
-  `
+  `,
+  standalone: true,
+  imports: [CommonModule, GalleryImageComponent, GalleryVideoComponent, GalleryIframeComponent]
 })
-export class GalleryItemComponent implements AfterViewChecked {
+export class GalleryItemComponent implements AfterViewInit {
 
-  readonly Types = GalleryItemType;
+  readonly Types = GalleryItemTypes;
 
-  /** A flag that ensure that the height was emitted after tbe image is loaded, used only for gallery image types */
-  private imageLoadingState: 'IN_PROGRESS' | 'DONE' = 'IN_PROGRESS';
+  /** A stream that indicates that the height was emitted after the image is loaded, used only for gallery image types */
+  readonly state$: BehaviorSubject<ItemState> = new BehaviorSubject<ItemState>('loading');
+
+  /** A flag that indicates if the item is type of image, it can be a custom template by the user,
+   * The img recognizer directive will set it to true*/
+  isItemContainImage: boolean;
 
   /** Gallery config */
   @Input() config: GalleryConfig;
@@ -77,17 +86,20 @@ export class GalleryItemComponent implements AfterViewChecked {
   /** Item's index in the gallery */
   @Input() index: number;
 
+  /** The number of total items */
+  @Input() count: number;
+
   /** Gallery current index */
   @Input() currIndex: number;
 
   /** Item's type 'image', 'video', 'youtube', 'iframe' */
-  @Input() type: string;
+  @Input() type: GalleryItemType;
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: GalleryItemData;
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<ErrorEvent>();
+  @Output() error: EventEmitter<ErrorEvent> = new EventEmitter<ErrorEvent>();
 
   @HostBinding('class.g-active-item') get isActive(): boolean {
     return this.index === this.currIndex;
@@ -97,17 +109,41 @@ export class GalleryItemComponent implements AfterViewChecked {
     return this.index;
   }
 
-  @HostBinding('attr.imageState') get imageState(): 'IN_PROGRESS' | 'DONE' {
-    return this.imageLoadingState;
+  @HostBinding('attr.itemState') get itemState(): ItemState {
+    return this.state$.value;
   }
 
-  get element(): HTMLElement {
+  get imageContext(): GalleryItemContext<ImageItemData> {
+    return {
+      $implicit: this.imageData,
+      index: this.index,
+      type: this.type,
+      active: this.isActive,
+      count: this.count,
+      first: this.index === 0,
+      last: this.index === this.count - 1
+    };
+  }
+
+  get itemContext(): GalleryItemContext<GalleryItemData> {
+    return {
+      $implicit: this.data,
+      index: this.index,
+      type: this.type,
+      active: this.isActive,
+      count: this.count,
+      first: this.index === 0,
+      last: this.index === this.count - 1
+    };
+  }
+
+  get nativeElement(): HTMLElement {
     return this.el.nativeElement;
   }
 
   get isAutoPlay(): boolean {
     if (this.isActive) {
-      if (this.type === GalleryItemType.Video || this.type === GalleryItemType.Youtube) {
+      if (this.type === GalleryItemTypes.Video || this.type === GalleryItemTypes.Youtube) {
         return this.videoData.autoplay;
       }
     }
@@ -115,10 +151,10 @@ export class GalleryItemComponent implements AfterViewChecked {
 
   get youtubeSrc(): string {
     let autoplay: 1 | 0 = 0;
-    if (this.isActive && this.type === GalleryItemType.Youtube && (this.data as YoutubeItemData).autoplay) {
+    if (this.isActive && this.type === GalleryItemTypes.Youtube && (this.data as YoutubeItemData).autoplay) {
       autoplay = 1;
     }
-    const url = new URL(this.data.src);
+    const url: URL = new URL(this.data.src as string);
     url.search = new URLSearchParams({
       wmode: 'transparent',
       ...(this.data as YoutubeItemData).params,
@@ -146,56 +182,14 @@ export class GalleryItemComponent implements AfterViewChecked {
     return this.data;
   }
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
+  constructor(private el: ElementRef) {
   }
 
-  ngAfterViewChecked(): void {
-    const height = this.getHeight();
-    this.element.style.setProperty('--g-item-width', `${ this.getWidth() }px`);
-    this.element.style.setProperty('--g-item-height', `${ height }px`);
-    if (this.currIndex === this.index) {
-      // Auto-height feature, only allowed when sliding direction is horizontal
-      const isThumbPositionHorizontal: boolean = this.config.thumbPosition === 'top' || this.config.thumbPosition === 'bottom';
-      if (this.config.autoHeight && height && isThumbPositionHorizontal) {
-        // Change slider height
-        this.element.parentElement.parentElement.style.height = `${ height }px`;
-      }
+  ngAfterViewInit(): void {
+    // If item does not contain an image, then set the state to DONE
+    if (!this.isItemContainImage) {
+      this.state$.next('success');
     }
-  }
-
-  onItemLoaded(): void {
-    if (this.imageLoadingState === 'IN_PROGRESS') {
-      this.imageLoadingState = 'DONE';
-      // Detect changes to re-calculate item size
-      this.cd.detectChanges();
-    }
-  }
-
-  private getWidth(): number {
-    if (this.config.slidingDirection === 'horizontal') {
-      const firstElementChild: Element = this.element?.firstElementChild;
-      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild?.clientWidth) {
-        return firstElementChild.clientWidth;
-      }
-    }
-    return this.element.parentElement.parentElement.clientWidth;
-  }
-
-  private getHeight(): number {
-    const firstElementChild: Element = this.element.firstElementChild;
-    if (firstElementChild) {
-      if (this.config.autoHeight) {
-        if (this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
-          return firstElementChild.clientHeight;
-        }
-      }
-      if (this.config.slidingDirection === 'vertical') {
-        if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
-          return firstElementChild.clientHeight;
-        }
-      }
-    }
-    return this.element.parentElement.parentElement.clientHeight;
   }
 }
 

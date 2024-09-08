@@ -28,6 +28,38 @@
             "tsConfig": "projects/ng-gallery/tsconfig.spec.json",
             "karmaConfig": "projects/ng-gallery/karma.conf.js"
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "styles": ["@angular/cdk/overlay-prebuilt.css"],
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery"
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "styles": ["@angular/cdk/overlay-prebuilt.css"],
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery"
+            ],
+            "outputDir": "dist/storybook/ng-gallery"
+          }
         }
       }
     },
@@ -43,12 +75,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ng-gallery-demo",
+            "outputPath": {
+              "base": "dist/ng-gallery-demo"
+            },
             "index": "projects/ng-gallery-demo/src/index.html",
-            "main": "projects/ng-gallery-demo/src/main.ts",
-            "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/ng-gallery-demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/ng-gallery-demo/tsconfig.app.json",
             "assets": [
               "projects/ng-gallery-demo/src/favicon.ico",
@@ -64,12 +99,16 @@
               "@fortawesome/free-solid-svg-icons"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "projects/ng-gallery-demo/src/main.ts",
+            "server": "projects/ng-gallery-demo/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/ng-gallery-demo/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -84,8 +123,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -105,18 +142,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-gallery-demo:build"
+            "buildTarget": "ng-gallery-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-gallery-demo:build:production"
+              "buildTarget": "ng-gallery-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-gallery-demo:build"
+            "buildTarget": "ng-gallery-demo:build"
           }
         },
         "test": {

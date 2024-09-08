@@ -13,10 +13,14 @@
     <section-title class="no-margin-bottom">Usage</section-title>
 
     <note class="info" style="margin: -3em 0 -1em">
-      <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>
-        see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
-                   [routerLink]="['/getting-started/core']">Getting
-          Started Guide</a></p>
+      <p>If you haven't installed the module in step <span class="section-number inline-number">1</span>
+        see the <a mat-button
+                   class="inline-button"
+                   style="padding: 0 0.5em"
+                   color="accent"
+                   routerLink="/getting-started/gallery">
+          Getting Started Guide
+        </a></p>
     </note>
 
     <div class="usage-title">
@@ -30,24 +34,15 @@
         <ng-template matTabContent>
           <p>The most basic usage is to load items using an array of type <code class="hljs">GalleryItem[]</code></p>
           <p>This is done using the template binding</p>
-          <hl-code [code]="code.basic"></hl-code>
-        </ng-template>
-      </mat-tab>
-
-      <mat-tab label="Stream">
-        <ng-template matTabContent>
-          <p>Another way is to convert a stream of data to a stream of gallery items using the map operator.</p>
-          <p>This can be done using the <code class="hljs">async</code> pipe to subscribe to the stream in the
-            template.</p>
-          <hl-code [code]="code.stream"></hl-code>
+          <hl-code [code]="code.basic"/>
         </ng-template>
       </mat-tab>
 
       <mat-tab label="GalleryComponent">
         <ng-template matTabContent>
           <p>Alternatively, The gallery can be accessed using the component reference.</p>
-          <p>Get the component using <code class="hljs">@ViewChild(GalleryComponent)</code> then add items</p>
-          <hl-code [code]="code.galleryCmp"></hl-code>
+          <p>Get the component using <code class="hljs">&#64;ViewChild(GalleryComponent)</code> then add items</p>
+          <hl-code [code]="code.galleryCmp"/>
         </ng-template>
       </mat-tab>
 
@@ -56,7 +51,7 @@
           <p>Access the gallery from anywhere in your app.</p>
           <p>Use the <code class="hljs">Gallery</code> service to get the <code class="hljs">GalleryRef</code> by id
           </p>
-          <hl-code [code]="code.galleryRef"></hl-code>
+          <hl-code [code]="code.galleryRef"/>
         </ng-template>
       </mat-tab>
 
@@ -64,22 +59,23 @@
 
     <h3>Example</h3>
 
-    <gallery id="basic"
-             *ngIf="media$ | async; let config"
-             [items]="fruits$ | async"
-             [dots]="true"
-             [thumbWidth]="config.thumbWidth"
-             [thumbHeight]="config.thumbHeight"
-             [thumbPosition]="config.thumbPosition">
-    </gallery>
+    @if (media$ | async; as config) {
+      <gallery id="basic"
+               [items]="fruits$ | async"
+               thumbs
+               bullets
+               [thumbWidth]="config.thumbWidth"
+               [thumbHeight]="config.thumbHeight"
+               [thumbPosition]="config.thumbPosition"/>
+    }
 
-    <hl-code [code]="code.example"></hl-code>
+    <hl-code [code]="code.example"/>
 
     <note>
       <p>The gallery has many options that you can adjust, check all available options in
         <a mat-button class="inline-button" color="primary" target="_blank"
            href="https://github.com/MurhafSousli/ngx-gallery/wiki/Gallery-API">
-          <fa-icon icon="external-link-alt"></fa-icon>
+          <fa-icon icon="external-link-alt"/>
           Gallery API
         </a>
       </p>
@@ -88,7 +84,8 @@
     <p>Beside these options, you can also use CSS to change gallery's style.</p>
 
     <p>For more advanced usage, check the
-      <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/advanced">Advanced
+      <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/custom-templates">Custom
+        Templates
         Example</a>
     </p>
 

@@ -1,15 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
   GalleryItem,
   GalleryConfig,
   LoadingStrategy,
-  SlidingDirection,
+  Orientation,
   ThumbnailsPosition,
-  ThumbnailsView
+  GalleryComponent
 } from 'ng-gallery';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   host: {
@@ -18,7 +30,9 @@ import { Pixabay } from '../../service/pixabay.service';
   selector: 'lab',
   templateUrl: './lab.component.html',
   styleUrls: ['./lab.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FlexLayoutModule, MatIconModule, NgIf, GalleryComponent, MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, FormsModule, NgFor, MatOptionModule, MatCheckboxModule, MatInputModule, FooterComponent, AsyncPipe]
 })
 export class LabComponent implements OnInit {
 
@@ -29,11 +43,10 @@ export class LabComponent implements OnInit {
   imageSizes = ['cover', 'contain'];
   thumbPositions = ['top', 'left', 'right', 'bottom'];
   loadingStrategies = ['default', 'lazy', 'preload'];
-  thumbModes = ['strict', 'free'];
-  thumbViews = ['default', 'contain'];
-  slidingDirections = ['vertical', 'horizontal'];
+  orientations = ['vertical', 'horizontal'];
   dotsCounterPositions = ['top', 'bottom'];
   scrollBehaviors = ['auto', 'smooth'];
+  loadingAttrs = ['eager', 'lazy'];
 
   player$ = new BehaviorSubject<any>({ active: false });
   itemClick$ = new BehaviorSubject<any>({ active: false });
@@ -49,33 +62,34 @@ export class LabComponent implements OnInit {
     this.config = {
       nav: true,
       loop: true,
-      dots: true,
-      dotsPosition: 'bottom',
+      bullets: true,
+      bulletPosition: 'bottom',
       counterPosition: 'top',
-      resizeDebounceTime: 50,
-      slidingDuration: 468,
-      thumb: true,
+      resizeDebounceTime: 0,
+      scrollDuration: 468,
+      thumbs: true,
       counter: true,
-      autoPlay: false,
-      slidingDisabled: false,
-      thumbSlidingDisabled: false,
-      mouseSlidingDisabled: false,
-      thumbMouseSlidingDisabled: false,
+      autoplay: false,
+      disableScroll: false,
+      disableThumbScroll: false,
+      disableMouseScroll: false,
+      disableThumbMouseScroll: false,
       thumbWidth: 120,
       thumbHeight: 90,
       imageSize: 'contain',
-      disableThumb: false,
-      playerInterval: 3000,
-      thumbView: ThumbnailsView.Contain,
+      thumbImageSize: 'cover',
+      disableThumbs: false,
+      autoplayInterval: 3000,
+      thumbCentralized: false,
       thumbPosition: ThumbnailsPosition.Bottom,
       loadingStrategy: LoadingStrategy.Preload,
-      slidingDirection: SlidingDirection.Horizontal,
+      orientation: Orientation.Horizontal,
       autoHeight: false,
       itemAutosize: false,
       thumbAutosize: false,
       scrollBehavior: 'smooth',
-      navScrollBehavior: 'smooth',
-      debug: false
+      loadingAttr: 'lazy',
+      debug: true
     };
   }
 

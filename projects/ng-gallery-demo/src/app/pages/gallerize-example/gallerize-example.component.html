@@ -23,9 +23,9 @@
     </ul>
 
     <note class="info" style="margin-top: -1em">
-      <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>
+      <p>If you haven't installed the module in step <span class="section-number inline-number">1</span>
         see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
-                   [routerLink]="['/getting-started/gallery']">Getting
+                   [routerLink]="['/getting-started/lightbox']">Getting
           Started Guide</a></p>
     </note>
 
@@ -39,26 +39,26 @@
 
     <h3>Basic example</h3>
 
-    <hl-code [code]="code.onElements"></hl-code>
+    <hl-code [code]="code.onElements"/>
 
     <div class="row" gallerize="auto-detect">
       <div class="column">
         <img *ngFor="let item of examples$ | async | slice:0:3"
-             src="{{item.data.thumb}}"
+             [src]="item.data.thumb"
              [attr.imageSrc]="item.data.src"
              [attr.thumbSrc]="item.data.thumb">
       </div>
       <div class="column">
         <img *ngFor="let item of examples$ | async | slice:3:6"
-             src="{{item.data.thumb}}"
+             [src]="item.data.thumb"
              [attr.imageSrc]="item.data.src"
              [attr.thumbSrc]="item.data.thumb">
       </div>
       <div class="column">
         <img *ngFor="let item of examples$ | async | slice:6:9"
-             src="{{item.data.src}}"
-             [attr.imageSrc]=""
-             [attr.thumbSrc]="">
+             [src]="item.data.thumb"
+             [attr.imageSrc]="item.data.src"
+             [attr.thumbSrc]="item.data.thumb">
       </div>
     </div>
 
@@ -71,7 +71,7 @@
 
     <p>Detect background images of elements with selector <code class="hljs">.gallery-img</code></p>
 
-    <hl-code [code]="code.withSelector"></hl-code>
+    <hl-code [code]="code.withSelector"/>
 
   </section>
 
@@ -82,11 +82,11 @@
       gallery component.
     </p>
 
-    <gallery id="gallerize-ex" gallerize [items]="images$ | async"></gallery>
+    <gallery id="gallerize-ex" thumbs gallerize [items]="images$ | async"/>
 
     <h3>Code</h3>
 
-    <hl-code [code]="code.onGallery"></hl-code>
+    <hl-code [code]="code.onGallery"/>
   </section>
 </div>
 
